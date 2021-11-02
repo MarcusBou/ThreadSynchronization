@@ -10,6 +10,7 @@ namespace Opgave_2_og_3
     {
         private static readonly object Locker = new object();
         int charUsed;
+        bool printing = false;
 
         /// <summary>
         /// Prints The charPrinting 60 times and adds 60 to how many chars has been used
@@ -22,6 +23,12 @@ namespace Opgave_2_og_3
             {
                 lock (Locker)
                 {
+                    while (printing == true)
+                    {
+                        Monitor.Wait(true);
+                    }
+
+                    printing = true;
                     for (int i = 0; i < 60; i++)
                     {
                         Console.Write(charPrinting);
@@ -29,8 +36,9 @@ namespace Opgave_2_og_3
                     }
                     Console.Write("     " + charUsed);
                     Console.WriteLine();
+                    printing = false;
                     Monitor.PulseAll(Locker);
-                    Thread.Sleep(200);
+                    Thread.Sleep(100);
                 }
             }
         }
