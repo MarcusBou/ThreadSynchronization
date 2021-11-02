@@ -16,9 +16,15 @@ namespace Øvelse_1
             while (true)
             {
                 Monitor.Enter(locker);
-                counter = counter + 2;
-                Console.WriteLine("counter has gone up it is now: " + counter);
-                Monitor.Exit(locker);
+                try
+                {
+                    counter = counter + 2;
+                    Console.WriteLine("counter has gone up it is now: " + counter);
+                }
+                finally
+                {
+                    Monitor.Exit(locker);
+                }
                 Thread.Sleep(1000);
             }
         }
@@ -28,9 +34,15 @@ namespace Øvelse_1
             while (true)
             {
                 Monitor.Enter(locker);
-                counter--;
-                Console.WriteLine("Counter has gone down it is now: " + counter);
-                Monitor.Exit(locker);
+                try
+                {
+                    counter--;
+                    Console.WriteLine("Counter has gone down it is now: " + counter);
+                }
+                finally
+                {
+                    Monitor.Exit(locker);
+                }
                 Thread.Sleep(1000);
             }
         }
